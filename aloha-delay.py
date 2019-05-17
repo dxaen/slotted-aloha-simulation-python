@@ -5,14 +5,21 @@ import os
 import threading
 import thread
 
+RAND_ONE = 999314
+RAND_TWO = 1000000
+TRANS_PROB_IN_BACKOFF = 0.001
+ARRIVAL_RATE = 1.0
+
+
+
 
 class RV:
-        r = Random(999314)
+        r = Random(RAND_ONE)
         Channel = Resource(1)
 
 
 class Node(Process):
-        ArrivalRate = 1.0
+        ArrivalRate = ARRIVAL_RATE
         TransmissionTime = 1.0
         AcitiveNodes = []
         InactiveNodes = []
@@ -21,7 +28,7 @@ class Node(Process):
         NonWastedSlots = 0
         Clock = 0
         TotalPackets = 0
-        TransmissionProbabilityInBackoff = 0.001
+        TransmissionProbabilityInBackoff = TRANS_PROB_IN_BACKOFF
         def __init__(self):
                 Process.__init__(self)
                 Node.NodeID += 1
@@ -76,7 +83,7 @@ def main():
             NodeList.append(Node())
             activate(NodeList[I], NodeList[I].Run)
 
-        simulate(1000000)
+        simulate(RAND_TWO)
 
         print 'Wasted Slots = ', Node.WastedSlots
         print 'NotWasted = ', Node.NonWastedSlots
@@ -159,7 +166,7 @@ else:
 
     print 'For Interactive Prompt'
     class RV:
-        R = random.Random(12233445566)
+        R = random.Random(RAND_TWO)
     class UserForDelay:
         NumberofNodes = input('Enter the number of nodes ')
         WaitingTimeForAllNodes = 0
